@@ -55,7 +55,7 @@ COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
 
 RUN apk -U upgrade \
-  && apk add --no-cache curl supervisor su-exec libstdc++ libgcc libxml2 lighttpd \
+  && apk add --no-cache curl supervisor su-exec libstdc++ libgcc libxml2 lighttpd shadow \
   && rm -rf /var/cache/apk/* \
   && addgroup -g ${GID} rtorrent \
   && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${UID} rtorrent \
