@@ -6,9 +6,7 @@ FROM alpine:3.10 as build
 
 RUN NB_CORES=${BUILD_CORES-$(getconf _NPROCESSORS_CONF)} \
   && apk -U upgrade \
-  && apk add --no-cache build-base git libtool automake autoconf tar xz binutils curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libxml2-dev \
-  && runtime_pkgs="curl supervisor su-exec libstdc++ libgcc libxml2" \
-  && apk add --no-cache ${runtime_pkgs}
+  && apk add --no-cache build-base git libtool automake autoconf tar xz binutils curl curl-dev cppunit-dev libressl-dev zlib-dev linux-headers ncurses-dev libxml2-dev
 
   # compile xmlrpc-c
 RUN cd /tmp \
