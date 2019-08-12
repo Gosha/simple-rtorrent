@@ -1,4 +1,4 @@
-# Simple rTorrent - UNDER CONSTRUCTION!
+# Simple rTorrent - UNDER CONSTRUCTION! 
 A lightweight and simple rtorrent container.
 
 I made this because I wanted a simple rtorrent container without any WebUI. The idea is to run the WebUI in a seperate container. There's no authentication, because the container is not meant to be exposed outside the docker network.  
@@ -82,6 +82,7 @@ services:
 ```
 
 Go to `http://<IP>:3000` and setup the connection as showed below. `rTorrent Host` is the name of the service in the docker file. In this case `rtorrent`.
+
 ![](flood-ui.png)
 
 Flood-UI does have two environment variables as below, but on this day of writing, it does not really change anything. You still have to write the rTorrent host and port input field.
