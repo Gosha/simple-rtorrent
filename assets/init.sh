@@ -25,4 +25,6 @@ supervisorctl start rtorrent
 if [ $ENABLE_SCGI = "true" ]; then
     echo_log "--> INFO Starting lighttpd.."
     supervisorctl start lighttpd
+else
+    echo_log "--> INFO Lighttpd is not enabled, not starting it.."
 fi
