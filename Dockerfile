@@ -48,8 +48,8 @@ RUN strip -s /usr/local/bin/rtorrent \
 
 FROM alpine:3.10
 
-ENV UID=991
-ENV GID=991
+ENV PUID=991
+ENV PGID=991
 
 COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
@@ -57,13 +57,13 @@ COPY --from=build /usr/local/lib /usr/local/lib
 RUN apk -U upgrade \
   && apk add --no-cache curl supervisor su-exec libstdc++ libgcc libxml2 lighttpd shadow \
   && rm -rf /var/cache/apk/* \
-  && addgroup -g ${GID} rtorrent \
-  && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${UID} rtorrent \
+  && addgroup -g ${PGID} rtorrent \
+  && adduser -h /home/rtorrent -s /bin/sh -G rtorrent -D -u ${PUID} rtorrent \
   && mkdir /home/rtorrent/rtorrent-session \
-  && chown ${UID}:${GID} /home/rtorrent/rtorrent-session \
+  && chown ${PUID}:${PGID} /home/rtorrent/rtorrent-session \
   && mkdir /etc/supervisor.d \
-  && mkdir /downloads && chown ${UID}:${GID} /downloads \
-  && mkdir /watch && chown ${UID}:${GID} /watch
+  && mkdir /downloads && chown ${PUID}:${PGID} /downloads \
+  && mkdir /watch && chown ${PUID}:${PGID} /watch
 
 COPY assets/rtorrent-supervisord.ini /etc/supervisor.d/rtorrent-supervisord.ini
 COPY assets/lighttpd.conf /etc/lighttpd/lighttpd.conf
@@ -72,7 +72,7 @@ COPY assets/start-rtorrent.sh /usr/local/bin/start-rtorrent.sh
 COPY assets/start-lighttpd.sh /usr/local/bin/start-lighttpd.sh
 COPY assets/rtorrent.rc /home/rtorrent/rtorrent.rc
 
-RUN chown ${UID}:${GID} /home/rtorrent/rtorrent.rc
+RUN chown ${PUID}:${PGID} /home/rtorrent/rtorrent.rc
 
 VOLUME /watch
 VOLUME /downloads

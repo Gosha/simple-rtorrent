@@ -12,15 +12,15 @@ CURRENT_PGID=$(id -G rtorrent)
 if [ ! -z ${PUID+x} ] && [ $PUID != $CURRENT_PUID ]; then
     echo_log "INFO Changing rtorrent PUID to ${PUID}"
     usermod -u $PUID rtorrent
-    find / -user $CURRENT_PUID -exec chown -h rtorrent {} \;
+    find /home/ -user $CURRENT_PUID -exec chown -h rtorrent {} \;
 else
-    echo_log "INFO UID et set to $CURRENT_PUID"
+    echo_log "INFO PUID et set to $CURRENT_PUID"
 fi
 
 if [ ! -z ${PGID+x} ] && [ $PGID != $CURRENT_PGID ]; then
     echo_log "INFO Changing rtorrent PGID to ${PGID}"
-    usermod -G $PGID rtorrent
-    find / -group $CURRENT_PGID -exec chgrp -h rtorrent {} \;
+    groupmod -g $PGID rtorrent
+    find /home/ -group $CURRENT_PGID -exec chgrp -h rtorrent {} \;
 else
     echo_log "INFO PGID et set to $CURRENT_PGID"
 fi
