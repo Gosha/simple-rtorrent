@@ -3,28 +3,35 @@ set -e
 
 function echo_log {
     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
-    echo "$TIMESTAMP $*"
+    echo "$TIMESTAMP --> $*"
 }
 
-if [ -z ${UID+x} ]; then
-    OLD_UID=$(id -u rtorrent)
-    usermod -u $UID rtorrent
-    find / -user $OLD_UID -exec chown -h rtorrent {} \;
+CURRENT_PUID=$(id -u rtorrent)
+CURRENT_PGID=$(id -G rtorrent)
+
+if [ ! -z ${PUID+x} ] && [ $PUID != $CURRENT_PUID ]; then
+    echo_log "INFO Changing rtorrent PUID to ${PUID}"
+    usermod -u $PUID rtorrent
+    find / -user $CURRENT_PUID -exec chown -h rtorrent {} \;
+else
+    echo_log "INFO UID et set to $CURRENT_PUID"
 fi
 
-if [ -z ${GID+x} ]; then
-    OLD_GID=$(id -G rtorrent)
-    usermod -G $GID rtorrent
-    find / -group $OLD_GID -exec chgrp -h rtorrent {} \;
+if [ ! -z ${PGID+x} ] && [ $PGID != $CURRENT_PGID ]; then
+    echo_log "INFO Changing rtorrent PGID to ${PGID}"
+    usermod -G $PGID rtorrent
+    find / -group $CURRENT_PGID -exec chgrp -h rtorrent {} \;
+else
+    echo_log "INFO PGID et set to $CURRENT_PGID"
 fi
 
-echo_log "--> INFO Starting rtorrent..."
+echo_log "INFO Starting rtorrent..."
 supervisorctl start rtorrent
 
 # ENABLE_SCGI
-if [ $ENABLE_SCGI = "true" ]; then
-    echo_log "--> INFO Starting lighttpd.."
+if [ "$ENABLE_SCGI" = "true" ]; then
+    echo_log "INFO Starting lighttpd.."
     supervisorctl start lighttpd
 else
-    echo_log "--> INFO Lighttpd is not enabled, not starting it.."
+    echo_log "INFO Lighttpd is not enabled, not starting it.."
 fi
