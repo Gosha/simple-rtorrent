@@ -6,6 +6,10 @@ function echo_log {
     echo "$TIMESTAMP --> $*"
 }
 
+##################################
+#       Setting PUID/GUID        #
+##################################
+
 CURRENT_PUID=$(id -u rtorrent)
 CURRENT_PGID=$(id -G rtorrent)
 
@@ -25,8 +29,16 @@ else
     echo_log "INFO PGID et set to $CURRENT_PGID"
 fi
 
+##################################
+#       Starting rTorrent        #
+##################################
+
 echo_log "INFO Starting rtorrent..."
 supervisorctl start rtorrent
+
+##################################
+#  Starting lighttpd if enabled  #
+##################################
 
 # ENABLE_SCGI
 if [ "$ENABLE_SCGI" = "true" ]; then
