@@ -69,9 +69,10 @@ services:
       - /home/downloads:/downloads
       - /home/watch:/watch
     environment:
-      - UID=999
-      - GID=999
+      - PUID=999
+      - PGID=999
       - ENABLE_SCGI=true #Enable if you need an HTTP /RPC2 endpoint.
+
   flood:
     image: flood-ui
     container_name: flood-ui
