@@ -40,8 +40,7 @@ supervisorctl start rtorrent
 #  Starting lighttpd if enabled  #
 ##################################
 
-# ENABLE_SCGI
-if [ "$ENABLE_SCGI" = "true" ]; then
+if [ "$ENABLE_RPC2" = "true" ]; then
     echo_log "INFO Starting lighttpd.."
     supervisorctl start lighttpd
 else
