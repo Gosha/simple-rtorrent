@@ -1,4 +1,4 @@
-# Simple rTorrent - UNDER CONSTRUCTION! 
+# Simple rTorrent
 A lightweight and simple rtorrent container.
 
 I made this because I wanted a simple rtorrent container without any WebUI. The idea is to run the WebUI in a seperate container. There's no authentication, because the container is not meant to be exposed outside the docker network.  
