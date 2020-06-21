@@ -62,7 +62,7 @@ RUN apk -U upgrade \
   && mkdir /home/rtorrent/rtorrent-session \
   && chown ${PUID}:${PGID} /home/rtorrent/rtorrent-session \
   && mkdir /etc/supervisor.d \
-  && mkdir /downloads && chown ${PUID}:${PGID} /downloads \
+  && mkdir /data && chown ${PUID}:${PGID} /data \
   && mkdir /watch && chown ${PUID}:${PGID} /watch
 
 COPY assets/rtorrent-supervisord.ini /etc/supervisor.d/rtorrent-supervisord.ini
@@ -75,7 +75,7 @@ COPY assets/rtorrent.rc /home/rtorrent/rtorrent.rc
 RUN chown ${PUID}:${PGID} /home/rtorrent/rtorrent.rc
 
 VOLUME /watch
-VOLUME /downloads
+VOLUME /data
 
 EXPOSE 80/tcp
 EXPOSE 5000/tcp
